@@ -5,23 +5,18 @@
 ## API
 
 <!-- ## Litku.Version -->
-<details>
-<summary><b>Litku.Version</b></summary>
-<p>
+<details><summary><b>Litku.Version</b></summary><div>
 
 ```javascript
 coonsole.log(Litku.Version); // 0.0.1
 ```
 
-</p>
-</details>
+</div></details>
 
 <!-- ## Litku.Create(options) -->
-<details>
-<summary><b>Litku.Create(options)</b></summary>
-<p>
-
-`options` 参数配置，请阅读 <a href="#options">options</a>。
+<details><summary><b>Litku.Create(options)</b></summary><p>
+    
+`options` 参数配置，请阅读 <a href="#options">options参数列表</a>。
 
 ```javascript
 // 创建渲染实例
@@ -31,15 +26,15 @@ const renderer = LitkuSDB.Create(options);
 renderer.destroy();
 renderer = null;
 ```
-
-</p>
-</details>
+    
+</p></details>
 
 <!-- ## Litku.Extend() -->
-<details>
-<summary><b>Litku.Extend()</b></summary>
-<p>无使用说明。</p>
-</details>
+<details><summary><b>Litku.Extend()</b></summary><p>
+
+无使用说明。
+
+</p></details>
 
 <!-- ## options 参数列表 -->
 <h2 id="options"><code>options</code> 参数列表</h2>
