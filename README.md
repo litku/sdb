@@ -49,6 +49,28 @@ let options = {
     mid: '', // option product model id
     name: '产品名称', // product name
     url: null, // 产品官网链接
+    scene: 1, // 场景编号
+    ambient_light: 30, // 环境光照度, number
+    beam_angle: 15, // 产品型号光束角或默认光束角，如果load true，不要传递这个参数
+    // product ies，如果load true，不需要传递这个参数
+    ies: {
+        15: {
+            cct: 3000,
+            power: 7,
+            intensity: 500,
+            beam_angle: "15",
+            ies: "http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies",
+            dat: "http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat"
+        },
+        38: {
+            cct: 4000,
+            power: 7,
+            intensity: 725,
+            beam_angle: "38",
+            ies: "http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies",
+            dat: "http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat"
+        }
+    },
   },
   fullScreenButton: true, // 是否显示全屏按钮
   fullScreen: false, // 是否全屏显示，默认不全屏
