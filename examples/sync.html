@@ -39,55 +39,23 @@
     </div>
     <div id="sdb-container-wrapper"></div>
 
-    <script src="../dist/sdb.min.js"></script>
+    <script src="http://polyfill.alicdn.com/polyfill.min.js"></script>
+    <script src="../dist/sdb.dev.min.js"></script>
     <script>
-        let render = null;
+        var render = null;
         document.querySelector('#render').addEventListener('click', function () {
             if (render) return false;
-            let options = {
-                /**
-                 * canvas and ctrl container, default document.body
-                 */
+            var options = {
                 container: document.querySelector('#sdb-container-wrapper'),
-                /**
-                 * 是否远程加载product 数据，远程加载时需提供，product:{pid:'', [mid:'']}
-                 */
                 load: false,
-                /**
-                 * light product
-                 */
                 product: {
-                    /**
-                     * product id
-                     */
                     pid: '5d22ebc5badc4d69887117cf',
-                    /**
-                     * option product model id
-                     */
                     mid: '',
-                    /**
-                     * product name
-                     */
                     name: '产品名称',
-                    /**
-                     * 产品官网链接
-                     */
                     url: null,
-                    /**
-                     * 场景编号
-                     */
                     scene: 1,
-                    /**
-                     * 环境光照度, number
-                     */
                     ambient_light: 30,
-                    /**
-                     * 产品型号光束角或默认光束角
-                     */
                     beam_angle: 15,
-                    /**
-                     * product ies
-                     */
                     ies: {
                         15: {
                             cct: 3000,
@@ -116,70 +84,27 @@
                     },
 
                 },
-
-                /**
-                 * 是否显示全屏
-                 */
-                fullScreenButton: true,
-                /**
-                 * 是否全屏显示
-                 */
-                fullScreen: false,
-
-                /**
-                 * 是否允许部件旋转
-                 */
-                rotate: true,
-                /**
-                 * 是否显示旋转按钮
-                 */
-                rotateButton: true,
-
-                /**
-                 * 是否允许绽放
-                 */
-                zoom: true,
-                /**
-                 * 是否显示绽放按钮
-                 */
-                zoomButton: true,
-
-                /**
-                 * 视角, 默认 perspective(透视角)
-                 */
-                view: 'perspective|front|side|top',
-                /**
-                 * 是否显示视角切换按钮
-                 */
-                viewButton: true,
-
-                /**
-                 * 是否允许部件移动
-                 */
-                move: true,
-                /**
-                 * 是否显示移动按钮
-                 */
-                moveButton: true,
-
-                /**
-                 * 是否显示截图按钮
-                 */
-                screenShot: true,
-
                 /**
                  * control panel config (GUI config)
                  */
                 ctrl: {
-                    /**
-                     * 是否显示控制面板，PC,平板端时默认显示，手机端时默认不显示
-                     */
                     visible: true,
-                    /**
-                     * 是否显示FPS，默认不显示，可通过控制面板开关操作显示与隐藏
-                     */
                     stats: false,
-                }
+                    fullScreenButton: true,
+                    fullScreen: false,
+                    rotate: true,
+                    rotateButton: true,
+                    zoom: true,
+                    zoomButton: true,
+                    view: 'perspective|front|side|top',
+                    viewButton: true,
+                    move: true,
+                    moveButton: true,
+                    screenShot: true,
+                },
+                onClick: function (targetType) {
+                    console.log(targetType);
+                },
             };
 
             render = LitkuSDB.Create(options);
