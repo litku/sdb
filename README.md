@@ -80,6 +80,7 @@ let options = {
   ctrl: {
     visible: true, // 是否显示控制面板，PC,平板端时默认显示，手机端时默认不显示
     stats: false, // 是否显示FPS，默认不显示，可通过控制面板开关操作显示与隐藏
+    changeLampButton: true, // 是否展示更换灯具按钮
 
     fullScreenButton: true, // 是否显示全屏按钮
     fullScreen: false, // 是否全屏显示，默认不全屏
@@ -96,7 +97,7 @@ let options = {
     feedbackButton: true, // 是否显示截图按钮
   },
   onClick: function(targetType) {
-    // 点击元素的类型 targetType: 
+    // 点击元素的类型 targetType:
     // changeLamp|
     // fullScreen|move|rotate|scale|
     // perspectiveView|sideView|topView|frontView|

@@ -49,13 +49,9 @@
                 container: document.querySelector('#sdb-container-wrapper'),
                 load: false,
                 product: {
-                    pid: '5d22ebc5badc4d69887117cf',
-                    mid: '',
-                    name: '产品名称',
-                    url: null,
-                    scene: 1,
+                    name: '天花轨道防眩射灯',
                     ambient_light: 30,
-                    beam_angle: 15,
+                    angle: 15,
                     ies: {
                         15: {
                             cct: 3000,
@@ -82,7 +78,9 @@
                             dat: "http:\/\/cdn.lightank.com\/ies\/dat\/5d36a999b802f200d87799aa_38.dat"
                         }
                     },
-
+                    scene: 1,
+                    thumbnail: 'http://1t.click/G9N',
+                    url: null,
                 },
                 /**
                  * control panel config (GUI config)
@@ -90,20 +88,21 @@
                 ctrl: {
                     visible: true,
                     stats: false,
+                    changeLampButton: false, // 不展示更换灯具按钮
 
                     fullScreenButton: true,
                     fullScreen: false,
-                    move: true,
                     moveButton: true,
-                    rotate: true,
+                    move: true,
                     rotateButton: true,
+                    rotate: true,
                     scaleButton: true,
                     scale: true,
                     viewButton: true,
                     view: 'perspective|front|side|top',
 
-                    screenShot: true,
-                    feedbackButton: true,
+                    screenshotButton: true,
+                    feedbackButton: false,
                 },
                 onClick: function (targetType) {
                     console.log(targetType);
