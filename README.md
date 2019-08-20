@@ -52,7 +52,7 @@ let options = {
     // 如果load=false，需要传递下面的参数；如果load=true，不需要传递下面的参数
     name: '产品名称', // product name
     ambient_light: 30, // 环境光照度, number
-    beam_angle: '15', // 默认光束角，angle即将弃用
+    angle: '15', // 默认光束角，原定位beam_angle，现修改为angle。代码同时兼容beam_angle与angle。
     // 灯具产品的ies数据
     ies: {
       15: {
@@ -83,21 +83,25 @@ let options = {
 
     fullScreenButton: true, // 是否显示全屏按钮
     fullScreen: false, // 是否全屏显示，默认不全屏
-    rotateButton: true, // 是否显示旋转按钮
-    rotate: true, // 是否允许部件旋转
-    zoomButton: true, // 是否显示绽放按钮
-    zoom: true, // 是否允许绽放
-    viewButton: true, // 是否显示视角切换按钮
-    view: 'perspective|side|top|front', // 视角, 默认 perspective(透视角)
     moveButton: true, // 是否显示移动按钮
     move: true, // 是否允许部件移动
-    screenShot: true, // 是否显示截图按钮
+    rotateButton: true, // 是否显示旋转按钮
+    rotate: true, // 是否允许部件旋转
+    scaleButton: true, // 是否显示部件缩放按钮
+    scale: true, // 是否允许部件缩放
+    viewButton: true, // 是否显示视角切换按钮
+    view: 'perspective|side|top|front', // 视角, 默认 perspective(透视角)
+
+    screenshotButton: true, // 是否显示截图按钮
+    feedbackButton: true, // 是否显示截图按钮
   },
   onClick: function(targetType) {
     // 点击元素的类型 targetType: 
-    // changeLamp|fullScreen|rotate|zoom|
+    // changeLamp|
+    // fullScreen|move|rotate|scale|
     // perspectiveView|sideView|topView|frontView|
-    // move|screenShot|toggleControl|closeControl|
+    // screenShot|feedback|
+    // toggleControl|closeControl|
   },
 };
 ```
