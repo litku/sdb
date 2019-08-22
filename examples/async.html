@@ -3,17 +3,15 @@
 
 <head>
     <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <title>示例代码——异步加载灯具数据，再执行渲染</title>
     <meta name="description" content="Only Chrome or Firefox" />
+    <link rel="stylesheet" href="../dist/sdb.min.css">
     <style>
         body {
             margin: 0;
             padding: 40px 0;
             background: gold;
-        }
-
-        body>h1 {
-            text-align: center;
         }
 
         .buttons {
@@ -27,13 +25,59 @@
             height: 800px;
             background-color: black;
         }
+
+        body.mobile {
+            padding: 0;
+        }
+
+        body.mobile .buttons {
+            position: absolute;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0;
+            height: 40px;
+            background-color: black;
+        }
+
+
+        body.mobile .buttons h1 {
+            display: none;
+        }
+
+        body.mobile .buttons button {
+            display: block;
+            margin: 0 10px;
+            padding: 0 10px;
+            font-size: 20px;
+            line-height: 40px;
+            color: white;
+            background: black;
+            border: none;
+            border-radius: 10%;
+        }
+
+        body.mobile .buttons button:active {
+            background-color: #333;
+        }
+
+        body.mobile #sdb-container-wrapper {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: calc(100% - 40px);
+        }
     </style>
-    <link rel="stylesheet" href="../dist/sdb.min.css">
 </head>
 
 <body>
-    <h1>示例代码——异步加载灯具数据，再执行渲染</h1>
     <div class="buttons">
+        <h1>示例代码——异步加载灯具数据，再执行渲染</h1>
         <button id="render">渲染</button>
         <button id="destroy">销毁</button>
     </div>
@@ -42,6 +86,10 @@
     <script src="http://polyfill.alicdn.com/polyfill.min.js"></script>
     <script src="../dist/sdb.dev.min.js"></script>
     <script>
+        if (device.mobile() || device.ipad()) {
+            document.body.classList.add('mobile');
+        }
+
         var render = null;
         document.querySelector('#render').addEventListener('click', function () {
             if (render) return false;
