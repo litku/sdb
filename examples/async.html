@@ -122,8 +122,8 @@
                     screenshotButton: true,
                     feedbackButton: true,
                 },
-                onClick: function (targetType) {
-                    console.log(targetType);
+                onClick: function (targetType, optionData) {
+                    console.log(targetType, optionData);
                     if (targetType === 'changeLamp') {
                         console.log('正在更新灯具IES数据');
                         render.updateLamp({

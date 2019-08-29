@@ -166,14 +166,17 @@ let options = {
     screenshotButton: true, // 是否显示截图按钮
     feedbackButton: true, // 是否显示截图按钮
   },
-  onClick: function(targetType) {
-    // 点击元素的类型 targetType:
-    // changeLamp|
+  onClick: function(targetType, optionData) {
+    // targetType => 点击元素的类型
+    // optionData => 部分类型会传递数据
+
+    // 类型列表：
+    // changeLamp|changeScene
     // fullScreen|move|rotate|scale|
     // perspectiveView|sideView|topView|frontView|
     // screenShot|feedback|
     // toggleControl|closeControl|
-    // resetLights|reset
+    // resetLights|resetItems
   },
 };
 ```
