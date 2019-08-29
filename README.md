@@ -13,8 +13,8 @@ coonsole.log(Litku.Version); // 0.0.1
 
 </div></details>
 
-<!-- ## Litku.Create(options) -->
-<details><summary><b>Litku.Create(options)</b></summary><p>
+<!-- ## Litku.Create(options) => renderer -->
+<details><summary><b>Litku.Create(options) => renderer</b></summary><p>
     
 `options` 参数配置，请阅读 <a href="#options">options参数列表</a>。
 
@@ -36,12 +36,82 @@ renderer = null;
 
 </p></details>
 
+<!-- ## renderer.updateLamp(options, callback) => void -->
+<details><summary><b>renderer.updateLamp(options, callback) => void</b></summary><div>
+
+这个操作：
+
+- 不更新场景
+- 不更新环境光
+- 不更新光通量
+- 不更新色温
+
+只会更新灯具ies数据。
+
+```javascript
+// 创建渲染实例
+const renderer = LitkuSDB.Create(__full_options__);
+const callback = (err) => {
+  closeLoading();
+  if(err) {
+    // TODO 更新失败
+    return;
+  }
+  // TODO 更新成功
+};
+
+// 方式一：只有灯具id，内部先拉取灯具数据，再更新灯具
+showLoading();
+renderer.updateLamp({
+  load: true,
+  product: {
+    pid: '5d22ebc5badc4d69887117cf', // product id
+    mid: '', // option product model id
+  }
+}, callback);
+
+// 方式二：已知灯具数据，直接更新灯具
+showLoading();
+renderer.updateLamp({
+  load: false,
+  product: { // 详细内容，请阅读 options 参数列表
+    name: '产品名称',
+    ambient_light: 30,
+    angle: '15',
+    ies: {
+      15: {
+        beam_angle: '15',
+        cct: 3000,
+        dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
+        ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
+        intensity: 500,
+        power: 7,
+      },
+      38: {
+        beam_angle: '38',
+        cct: 4000,
+        dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat',
+        ies: 'http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies',
+        intensity: 725,
+        power: 7,
+      },
+    },
+    scene: 1,
+    thumbnail: 'http://1t.click/G9N',
+    url: 'http://1t.click/G9S',
+  }
+}, callback);
+```
+
+</div></details>
+
 <!-- ## options 参数列表 -->
 <h2 id="options">options 参数列表</h2>
 
 ```javascript
 let options = {
   container: document.querySelector('#sdb-container-wrapper'), // canvas and ctrl container, default document.body
+  scene: 1, // 强制使用场景1。若同时指定，以 scene 为准。
   load: true, // 是否远程加载product数据。远程加载时只提供 product:{pid:'', [mid:'']}
   // light product 数据
   product: {
@@ -57,10 +127,10 @@ let options = {
     ies: {
       15: {
         beam_angle: '15',
-        cct: 3000,
+        cct: 3000, // 请确保这个参数为数值类型
         dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
         ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
-        intensity: 500,
+        intensity: 500, // 请确保这个参数为数值类型
         power: 7,
       },
       38: {
@@ -103,6 +173,7 @@ let options = {
     // perspectiveView|sideView|topView|frontView|
     // screenShot|feedback|
     // toggleControl|closeControl|
+    // resetLights|reset
   },
 };
 ```
