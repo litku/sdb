@@ -4,19 +4,9 @@
 
 ## API
 
-### Litku.Version
-
-```javascript
-coonsole.log(Litku.Version); // 0.0.1
-```
-
-### Litku.Extend()
-
-无使用说明。
-
 ### Litku.Create(options) => renderer
 
-同步创建渲染器实例。`options` 参数配置，请阅读 <a href="#options">options 参数列表</a>。
+`options` 参数配置，请阅读 <a href="#options">options 参数列表</a>。
 
 ```javascript
 // 创建渲染实例
@@ -27,93 +17,81 @@ renderer.destroy();
 renderer = null;
 ```
 
-### Litku.CreateAsync(options, callback) => void
-
-异步创建渲染器实例。`options` 参数配置，请阅读 <a href="#options">options 参数列表</a>。
-
-```javascript
-LitkuSDB.CreateAsync(options, function(err, renderer) {
-  if (err) {
-    return;
-  }
-
-  // 销毁实例
-  renderer.destroy();
-  renderer = null;
-});
-```
-
 ### renderer.updateLamp(options, callback) => void
 
-这个操作：
-
-- 不更新场景
-- 不更新环境光
-- 不更新光通量
-- 不更新色温
-
-只会更新灯具 ies 数据。
+> 这个操作只会更新灯具 ies 数据。
+>
+> - 不更新场景
+> - 不更新环境光
+> - 不更新光通量
+> - 不更新色温
 
 ```javascript
 // 创建渲染实例
-const renderer = LitkuSDB.Create(__full_options__);
-const callback = (err) => {
-  closeLoading();
-  if (err) {
-    // TODO 更新失败
-    return;
-  }
-  // TODO 更新成功
-};
+let renderer = LitkuSDB.Create(options);
 
-// 方式一：只有灯具id，内部先拉取灯具数据，再更新灯具
-showLoading();
-renderer.updateLamp(
-  {
-    load: true,
-    product: {
-      pid: '5d22ebc5badc4d69887117cf', // product id
-      mid: '', // option product model id
+// 需要先判断渲染器是否已经创建
+if (!renderer.isRendererCreated) {
+  // 重新创建渲染器实例
+  renderer = LitkuSDB.Create(options);
+} else {
+  showLoading();
+
+  const callback = (err) => {
+    closeLoading();
+    if (err) {
+      // TODO 更新失败
+      return;
+    }
+    // TODO 更新成功
+  };
+
+  // 方式一-异步更新灯具：只有灯具id，内部先拉取灯具数据，再更新灯具
+  renderer.updateLamp(
+    {
+      load: true,
+      product: {
+        pid: '5d22ebc5badc4d69887117cf', // product id
+        mid: '', // option product model id
+      },
     },
-  },
-  callback,
-);
+    callback,
+  );
 
-// 方式二：已知灯具数据，直接更新灯具
-showLoading();
-renderer.updateLamp(
-  {
-    load: false,
-    product: {
-      // 详细内容，请阅读 options 参数列表
-      name: '产品名称',
-      ambient_light: 30,
-      angle: '15',
-      ies: {
-        15: {
-          beam_angle: '15',
-          cct: 3000,
-          dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
-          ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
-          intensity: 500,
-          power: 7,
-        },
-        38: {
-          beam_angle: '38',
-          cct: 4000,
-          dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat',
-          ies: 'http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies',
-          intensity: 725,
-          power: 7,
+  // 方式二-同步更新灯具：已知灯具数据，直接更新灯具
+  renderer.isRendererCreated &&
+    renderer.updateLamp(
+      {
+        load: false,
+        product: {
+          // 详细内容，请阅读 options 参数列表
+          name: '产品名称',
+          ambient_light: 30,
+          angle: '15',
+          ies: {
+            15: {
+              beam_angle: '15',
+              cct: 3000,
+              dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
+              ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
+              intensity: 500,
+            },
+            38: {
+              beam_angle: '38',
+              cct: 4000,
+              dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat',
+              ies: 'http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies',
+              intensity: 725,
+            },
+          },
+          scene: 1,
+          thumbnail: 'http://1t.click/G9N',
+          url: 'http://1t.click/G9S',
         },
       },
-      scene: 1,
-      thumbnail: 'http://1t.click/G9N',
-      url: 'http://1t.click/G9S',
-    },
-  },
-  callback,
-);
+      callback,
+    );
+}
 ```
 
 <span id="options"></span>
