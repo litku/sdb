@@ -4,19 +4,19 @@
 
 ## API
 
-<!-- ## Litku.Version -->
-<details><summary><b>Litku.Version</b></summary><div>
+### Litku.Version
 
 ```javascript
 coonsole.log(Litku.Version); // 0.0.1
 ```
 
-</div></details>
+### Litku.Extend()
 
-<!-- ## Litku.Create(options) => renderer -->
-<details><summary><b>Litku.Create(options) => renderer</b></summary><p>
-    
-`options` 参数配置，请阅读 <a href="#options">options参数列表</a>。
+无使用说明。
+
+### Litku.Create(options) => renderer
+
+同步创建渲染器实例。`options` 参数配置，请阅读 <a href="#options">options 参数列表</a>。
 
 ```javascript
 // 创建渲染实例
@@ -27,17 +27,23 @@ renderer.destroy();
 renderer = null;
 ```
 
-</p></details>
+### Litku.CreateAsync(options, callback) => void
 
-<!-- ## Litku.Extend() -->
-<details><summary><b>Litku.Extend()</b></summary><p>
+异步创建渲染器实例。`options` 参数配置，请阅读 <a href="#options">options 参数列表</a>。
 
-无使用说明。
+```javascript
+LitkuSDB.CreateAsync(options, function(err, renderer) {
+  if (err) {
+    return;
+  }
 
-</p></details>
+  // 销毁实例
+  renderer.destroy();
+  renderer = null;
+});
+```
 
-<!-- ## renderer.updateLamp(options, callback) => void -->
-<details><summary><b>renderer.updateLamp(options, callback) => void</b></summary><div>
+### renderer.updateLamp(options, callback) => void
 
 这个操作：
 
@@ -46,14 +52,14 @@ renderer = null;
 - 不更新光通量
 - 不更新色温
 
-只会更新灯具ies数据。
+只会更新灯具 ies 数据。
 
 ```javascript
 // 创建渲染实例
 const renderer = LitkuSDB.Create(__full_options__);
 const callback = (err) => {
   closeLoading();
-  if(err) {
+  if (err) {
     // TODO 更新失败
     return;
   }
@@ -62,51 +68,57 @@ const callback = (err) => {
 
 // 方式一：只有灯具id，内部先拉取灯具数据，再更新灯具
 showLoading();
-renderer.updateLamp({
-  load: true,
-  product: {
-    pid: '5d22ebc5badc4d69887117cf', // product id
-    mid: '', // option product model id
-  }
-}, callback);
+renderer.updateLamp(
+  {
+    load: true,
+    product: {
+      pid: '5d22ebc5badc4d69887117cf', // product id
+      mid: '', // option product model id
+    },
+  },
+  callback,
+);
 
 // 方式二：已知灯具数据，直接更新灯具
 showLoading();
-renderer.updateLamp({
-  load: false,
-  product: { // 详细内容，请阅读 options 参数列表
-    name: '产品名称',
-    ambient_light: 30,
-    angle: '15',
-    ies: {
-      15: {
-        beam_angle: '15',
-        cct: 3000,
-        dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
-        ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
-        intensity: 500,
-        power: 7,
+renderer.updateLamp(
+  {
+    load: false,
+    product: {
+      // 详细内容，请阅读 options 参数列表
+      name: '产品名称',
+      ambient_light: 30,
+      angle: '15',
+      ies: {
+        15: {
+          beam_angle: '15',
+          cct: 3000,
+          dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_15.dat',
+          ies: 'http://cdn.lightank.com/files/2019/0723/813181de10d342b2652fe41a76fe960da8e1f7da.ies',
+          intensity: 500,
+          power: 7,
+        },
+        38: {
+          beam_angle: '38',
+          cct: 4000,
+          dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat',
+          ies: 'http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies',
+          intensity: 725,
+          power: 7,
+        },
       },
-      38: {
-        beam_angle: '38',
-        cct: 4000,
-        dat: 'http://cdn.lightank.com/ies/dat/5d36a999b802f200d87799aa_38.dat',
-        ies: 'http://cdn.lightank.com/files/2019/0723/5d2f471e73fc0cee899762b5d42786f1533c8ed7.ies',
-        intensity: 725,
-        power: 7,
-      },
+      scene: 1,
+      thumbnail: 'http://1t.click/G9N',
+      url: 'http://1t.click/G9S',
     },
-    scene: 1,
-    thumbnail: 'http://1t.click/G9N',
-    url: 'http://1t.click/G9S',
-  }
-}, callback);
+  },
+  callback,
+);
 ```
 
-</div></details>
+<span id="options"></span>
 
-<!-- ## options 参数列表 -->
-<h2 id="options">options 参数列表</h2>
+## options 参数列表
 
 ```javascript
 let options = {
@@ -169,7 +181,6 @@ let options = {
   onClick: function(targetType, optionData) {
     // targetType => 点击元素的类型
     // optionData => 部分类型会传递数据
-
     // 类型列表：
     // changeLamp|changeScene
     // fullScreen|move|rotate|scale|
@@ -181,11 +192,10 @@ let options = {
   onError: function(code, error) {
     // code  => 错误代码
     // error => 错误对象实例
-
     // × 1 => 入口参数错误，不符合参数规范
     // √ 2 => 获取灯具数据失败，在loadLampData方法判断
     // √ 3 => 灯具数据错误，不包含正确的IES数据，在init方法判断
-  }
+  },
 };
 ```
 
