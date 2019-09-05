@@ -178,6 +178,14 @@ let options = {
     // toggleControl|closeControl|
     // resetLights|resetItems
   },
+  onError: function(code, error) {
+    // code  => 错误代码
+    // error => 错误对象实例
+
+    // × 1 => 入口参数错误，不符合参数规范
+    // √ 2 => 获取灯具数据失败，在loadLampData方法判断
+    // √ 3 => 灯具数据错误，不包含正确的IES数据，在init方法判断
+  }
 };
 ```
 
