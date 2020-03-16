@@ -17,6 +17,7 @@ renderer.destroy();
 renderer = null;
 ```
 
+
 ### renderer.updateLamp(options, callback) => void
 
 > 这个操作只会更新灯具 ies 数据。
